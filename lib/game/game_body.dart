@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_rsp/game/user_input.dart';
+import 'package:flutter_rsp/game/widget/user_input.dart';
 
-import 'cpu_input.dart';
-import 'game_result.dart';
+import 'enum.dart';
+import 'widget/cpu_input.dart';
+import 'widget/game_result.dart';
 
 class GameBody extends StatefulWidget {
   const GameBody({super.key});
@@ -14,6 +15,8 @@ class GameBody extends StatefulWidget {
 class _GameBodyState extends State<GameBody> {
   
   late bool isDone;
+  late InputType? _userInput;
+
   
   @override
   void initState() {
@@ -28,8 +31,15 @@ class _GameBodyState extends State<GameBody> {
       children: [
         Expanded(child: CpuInput(isDone: isDone)),
         Expanded(child: GameResult(isDone : isDone)),
-        Expanded(child: UserInput(isDone : isDone)),
+        Expanded(child: UserInput(isDone : isDone, callback: setUserInput)),
       ],
     );
+  }
+
+  void setUserInput(InputType userInput){
+    setState(() {
+      isDone = true;
+      _userInput = userInput;
+    });
   }
 }
