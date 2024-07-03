@@ -1,4 +1,6 @@
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_rsp/game/enum.dart';
 
 import 'input_card.dart';
@@ -7,13 +9,20 @@ class UserInput extends StatelessWidget {
 
   final bool isDone;
   final Function(InputType) callback;
+  final InputType? userInput;
 
-  const UserInput({ required this.isDone, required this.callback ,super.key});
+  const UserInput({this.userInput ,required this.isDone, required this.callback ,super.key});
 
   @override
   Widget build(BuildContext context) {
     if(isDone){
-      return Placeholder();
+      return Row(
+        children: [
+          Expanded(child: SizedBox.shrink()),
+          Expanded(child: InputCard(child: Image.asset(userInput!.path),)),
+          Expanded(child: SizedBox.shrink()),
+        ],
+      );
     }
     
     return Row(
@@ -22,8 +31,16 @@ class UserInput extends StatelessWidget {
   }
   
   List<Widget> _getInputs(Function(InputType) callback){
-    return InputType.values.map((type) => InputCard(callback: () { callback.call(type); },
-    child: Image.asset(type.path),)).toList();
+    return InputType.values
+        .map(
+            (type) => Expanded(
+                child: InkWell(
+                  onTap: (){callback.call(type);},
+                  child: InputCard(
+                    child: Image.asset(type.path),
+                  ),
+                )
+            )).toList();
   }
 }
 

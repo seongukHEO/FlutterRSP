@@ -19,10 +19,15 @@ class CpuInput extends StatelessWidget {
       return Placeholder();
     }
 
-    return Center(
-      child: InputCard(
-      child: getCpuInput()
-    ),
+    return Row(
+      children: [
+        Expanded(child: SizedBox.shrink()),
+        Expanded(child: InputCard(
+          child: getCpuInput(),
+        ),),
+
+        Expanded(child: SizedBox.shrink())
+      ]
     );
   }
 
@@ -30,6 +35,6 @@ class CpuInput extends StatelessWidget {
     if(isDone){
       return Image.asset(cpuInput.path);
     }
-    return SizedBox(width: 60, height: 60,child: Text("?", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),));
+    return SizedBox(height: 80,child: Text("??", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),));
   }
 }
